@@ -1,6 +1,8 @@
 var view=new ol.View(
 	{
-	center:[-8230000,535000],zoom:6,extent:[-8392046.4,461652.0,-8103420.1,592665.0],minZoom:6,maxZoom:10
+	center:[-8230000,535000],zoom:6
+	,extent:[-8392046.4,461652.0,-8103420.1,592665.0]
+	,minZoom:6,maxZoom:11
 }
 );
 var map=new ol.Map(

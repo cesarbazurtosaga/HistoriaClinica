@@ -13,7 +13,9 @@ if($tabla==2){
 		select gecodigo,genombre
 		from salud.gediagno_grupo g
 		where EXISTS(SELECT 1  from salud.gesius 
-		WHERE grupo_codigo_cie10 = g.gecodigo)		
+		WHERE grupo_codigo_cie10 = g.gecodigo)
+		UNION ALL 
+		SELECT 'GRUSG1','CHIKUNGUNYA GRUPOS'	
 	)t  where upper(genombre) like '%$clave%'  
 	) row;
 	";	

@@ -29,8 +29,8 @@ $(document).ready(function() {
 		          dataType: "jsonp",
 		          jsonpCallback:'getDiagnostico',
 		          success: function(data) {
-		          	console.log("data");
-		          	console.log(data);
+		          	/*console.log("data");
+		          	console.log(data);*/
 		          	if(data){
 		          		response($.map(data, function (el) {
 		                return {
@@ -70,27 +70,7 @@ $(document).ready(function() {
 	};
 	
 	
-    //CAMBIA EL COMBO DEPARTAMENTO PROVINCIA, MUNICIPIO VEREDA
-   /* $( "#layers" ).change(function () {
-	    var str = "";
-	    padre = "";
-	    $( "select option:selected" ).each(function() {
-	      str += $( this ).text(); console.log(str);
-	      global_valores = undefined;		//console.log("val globales: "+global_valores);
-	      if(str=="Departamento"){
-				$("#leyenda").hide();
-	      }else if(str=="Provincia"){
-				$("#leyenda").show();
-		  }else if(str=="Municipio"){
-				$("#leyenda").show();
-		  }else if(str=="Vereda"){
-	      		$("#div_filtro").hide();	
-	      }
-	  	featureOverlay1.removeFeature(highlight2);
-	    displayLayer(null,str);
-	   });
-	    //alert( str );
-	}).change();*/
+
   	$("#MostrarBusquedas").hide(100);
   	$("#OcultarBusqueda").click(function(){
 		$("#panelBusquedas").hide( 300, function() {

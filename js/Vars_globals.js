@@ -14,7 +14,7 @@ var lastPixel = [];
 var escalaVer, escalaMun, escalaPro, escalaDep;
 var nom_mostrar = "nom",
     val_mostrar = "cont",
-    tit_tooltip = "Núm Registro",
+    tit_tooltip = "",
     nom_padre = "padre",
     titulo_map = "HISTORIAS CLINICAS",
     tematica = "Salud",
@@ -25,14 +25,6 @@ var container = document.getElementById('popup');
 var content = document.getElementById('popup-content');
 var closer = document.getElementById('popup-closer');
 var resolutions_zoom = [305, 152, 76, 38];
-$(document).on({
-    ajaxStart: function() {
-    	 $("body").addClass("loading");
-    },
-    ajaxStop: function() {
-        $("body").removeClass("loading");
-    }
-});
 
 $("#InpClave").attr("disabled", true);
 String.prototype.trunc = String.prototype.trunc ||
@@ -72,3 +64,4 @@ $(function () {
 	});
 });
 
+waitingDialog.show();

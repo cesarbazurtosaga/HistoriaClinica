@@ -8,9 +8,9 @@ var peticionjsonp=function(esquema,layer,funcioncarga,viewparams){
     'version=1.0.0&request=GetFeature&typeName='+esquema+':'+layer+
     '&outputFormat=text/javascript&format_options=' +funcioncarga+
     '&srsname=EPSG:900913';
-    $("body").addClass("loading");
+    waitingDialog.show();
     if(viewparams){url+=viewparams;} 
-    $("body").addClass("loading");
+    
     $.ajax({
       url: url,
       dataType: 'jsonp'
@@ -42,9 +42,29 @@ var ListaTotales=function(_vectorsource){
     $("#TotalDiagnostico").empty().append(numeral(SumaTotal).format('0,0') +" Registros");
 };
 
+var getbreaks=function(fc){	
+	var fcFilter=turf.remove(fc, val_mostrar, 0);
+	var breaks;
+	if(fcFilter.features.length>7){
+		 breaks=turf.jenks(fcFilter, val_mostrar, 8);
+	}else{
+		 breaks=turf.jenks(fcFilter, val_mostrar, fc.features.lenth);
+	}
+			
+	if(breaks[0]!=0){
+		breaks.unshift(0);
+		breaks[1]=breaks[1]+1;
+	}
+		
+	global_valores=breaks;
+	console.log(global_valores);
+	AutoDisplayLeyend(global_valores);    
+};
+
+
 var loadFeatures = function(response) {
 	  var capa =  $("#layers option:selected").attr('value');	//console.log("LoadFeatures: " + capa);
-	  
+	  getbreaks(response);
 	  if (capa=='Departamento'){
 	    removerfeatures(vectorSource);
 	    vectorSource.addFeatures(vectorSource.readFeatures(response));
@@ -59,8 +79,8 @@ var loadFeatures = function(response) {
 	    ListaTotales(vsGob_Mun);
 	  }
 	  $("#InpClave").attr("disabled", false);
-	  $("body").removeClass("loading");
-  
+	  waitingDialog.hide();
+	
 }; 
 var refreshfeatures=function(cobertura){
     var parametros=getparametros();
@@ -87,7 +107,7 @@ var refreshfeatures=function(cobertura){
 var limiteDPTO=new ol.layer.Tile({
         source: new ol.source.TileWMS(/** @type {olx.source.TileWMSOptions} */ ({
           url: geoserver+'/gwc/service/wms',
-          params: {'LAYERS': 'administrativa:g_colombia_dpto', 'TILED': true, 'SRS':'EPSG%3A3857'},
+          params: {'LAYERS': 'administrativa:g_colombia_dpto', 'TILED': true,'STYLES':'g_colombia_dpto_border','SRS':'EPSG%3A900913'},
           serverType: 'geoserver'
         }))
       });
@@ -145,10 +165,9 @@ var lvGob_Dep = new ol.layer.Vector({
 	}else{
 		fuente = '9px Calibri,sans-serif';
 	}
-
       var styleC = [new ol.style.Style({
         fill: new ol.style.Fill({
-          color: getColor('Cundinamarca',parseFloat(feature.get(val_mostrar)),feature.get(nom_mostrar))
+          color: getColor(parseFloat(feature.get(val_mostrar)))
           //color:'#FBFB55' 
         }),
         stroke: new ol.style.Stroke({
@@ -194,7 +213,7 @@ var lvGob_Prov = new ol.layer.Vector({
 	var texto = feature.get(nom_mostrar);
 	   var styleC = [new ol.style.Style({
         fill: new ol.style.Fill({
-          color: getColor('Provincia',parseFloat(feature.get(val_mostrar)),feature.get(nom_mostrar))
+          color: getColor(parseFloat(feature.get(val_mostrar)))
           //color:'#FBFB55' 
         }),
         stroke: new ol.style.Stroke({
@@ -252,7 +271,7 @@ var lvGob_Mun = new ol.layer.Vector({
 
 	var styleC = [new ol.style.Style({
         fill: new ol.style.Fill({
-          color: getColor('Municipio',parseFloat(feature.get(val_mostrar)),feature.get(nom_mostrar),feature.get('padre'))
+          color: getColor(parseFloat(feature.get(val_mostrar)))
           //color:'#FBFB55' 
         }),
         stroke: new ol.style.Stroke({

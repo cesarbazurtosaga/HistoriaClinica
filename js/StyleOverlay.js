@@ -9,7 +9,7 @@ var featureOverlay=new ol.FeatureOverlay(
 				{
 				stroke:new ol.style.Stroke(
 					{
-					color:'red',width:2
+					color:'#00FFFF',width:2
 				}
 				),fill:new ol.style.Fill(
 					{
@@ -46,7 +46,7 @@ var featureOverlay1=new ol.FeatureOverlay(
 				{
 				stroke:new ol.style.Stroke(
 					{
-					color:'red',width:3
+					color:'#00FFFF',width:3
 				}
 				),fill:new ol.style.Fill(
 					{
