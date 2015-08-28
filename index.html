@@ -33,6 +33,7 @@
     <link rel="stylesheet" href="./functions/jslider/css/jslider.plastic.css" type="text/css">
     <link rel="stylesheet" href="./functions/jslider/css/jslider.round.css" type="text/css">
     <link rel="stylesheet" href="./functions/jslider/css/jslider.round.plastic.css" type="text/css">
+    <link rel="stylesheet" href="./functions/Tab/bootstrap.vertical-tabs.min.css" type="text/css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" href="./css/MainNav.css" />
 
@@ -117,7 +118,7 @@
                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Diagnostico
             </button>
         </div>
-        <div class="col-sm-2 col-md-2" id="panelBusquedas" style="width:200px;">
+        <div class="col-sm-2 col-md-2" id="panelBusquedas" style="width:240px;">
             <div class="panel panel-primary">
                 <div class="panel-heading">
 
@@ -128,42 +129,24 @@
 						</div>
 					</h3>
                 </div>
-                <div class="panel-body">
-                    <div role="tabpanel">
-                        <ul class="nav nav-tabs" role="tablist">
-                            <li role="presentation" class="active">
-                                <a href="#home" aria-controls="home" role="tab" data-toggle="tab">
-                                    <span class="glyphicon glyphicon-list-alt" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Eventos"></span>
-                                </a>
-                            </li>
-                            <li role="presentation">
-                                <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">
-                                    <span class="glyphicon glyphicon-time" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Tiempo"></span>
-                                </a>
-                            </li>
-                            <li role="presentation">
-                                <a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">
-                                    <span class="glyphicon glyphicon-picture" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Mapa"></span>
-                                </a>
-                            </li>
-                        </ul>
+                <div class="panel-body col-xs-12" style="background-color: rgba(250,250,250,0.7);">
+                    	<div  class="col-xs-9" style="background-color: white;width: 80%;">
                         <div class="tab-content">
-                            <div role="tabpanel" class="tab-pane active" id="home">
-                                <center><h5><b>EVENTOS</b></h5></center>
+                            <div role="tabpanel" class="tab-pane active" id="home" >
                                 <div>
-                                    <label>Tabla Diagnostica: </label>
-                                    <select id="sexo" class="form-control">
-                                        <option value="" selected>CIE10</option>
-                                        <option value="">CIE10 GRUPOS</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label>Grupo Diagnostico</label>
-                                    <div class="pull-right">
+                                	<div class="pull-right">
                                         <button type="button" class="btn btn-primary btn-xs" id="TodosCasos">
                                             <span class="glyphicon glyphicon glyphicon-remove" aria-hidden="true"></span>
                                         </button>
                                     </div>
+                                    <label>Tabla Diag.: </label>
+                                    <select id="TablaGrupo" class="form-control">
+                                        <option value="1" selected>CIE10</option>
+                                        <option value="2">CIE10 GRUPOS</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label>Grupo Diagnostico:</label>
                                     <input type="text" class="form-control" id="InpClave" value="" placeholder="Introduce el Grupo de Diagnostico">
                                 </div>
                                 <div>
@@ -184,30 +167,31 @@
                                     <select id="msEstadoCivil" multiple="multiple">
                                     </select>
                                 </div>
-                                <div class="form-group">
+                                <div>
                                     <label>Aseguramiento: </label>
                                     <select id="msTipoRegimen" multiple="multiple">
                                     </select>
                                 </div>
-                                <div class="form-group">
+                                <div class="dropup">
                                     <label>EPS: </label>
                                     <select id="msEPS" multiple="multiple">
                                     </select>
                                 </div>
-                                <div class="form-group">
+                                <div class="dropup">
                                     <label>Tipo Atencion: </label>
                                     <select id="msTipoAtencion" multiple="multiple">
                                     </select>
                                 </div>
 
                                 <!-- Build your select: -->
-                                <div class="form-group">
+                                <div class="dropup">
                                     <label>Etnia: </label>
                                     <select id="msEtnia" multiple="multiple">
                                     </select>
                                 </div>
                                 <p class="text-success" id="CodDiagnostico"></p>
                                 <p class="text-danger" id="msjBusqueda"></p>
+                                <br>
 
                             </div>
                             <div role="tabpanel" class="tab-pane" id="profile">
@@ -247,18 +231,41 @@
                                 <hr>
                             </div>
                         </div>
-
+						
                     </div>
-                    <div class="pull-left">
-                        <button type="button" class="btn btn-success " onclick="filtrar()">
-                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Buscar
-                        </button>
-                    </div>
-                    <div class="pull-right">
-                        <button type="button" class="btn btn-warning" id="Comparativos">
-                            <span class="glyphicon glyphicon-sound-dolby" aria-hidden="true"></span>
-                        </button>
-                    </div>
+                     <div class="col-xs-3" style="padding-right: 0px;padding-left: 0px;width: 20%;padding-top: 0px;"> 
+				          <!-- Nav tabs -->
+				          <ul class="nav nav-tabs tabs-right">
+				            <li role="presentation" class="active">
+                                <a href="#home" aria-controls="home" role="tab" data-toggle="tab">
+                                    <span class="glyphicon glyphicon-list-alt" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Eventos"></span>
+                                </a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">
+                                    <span class="glyphicon glyphicon-time" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Tiempo"></span>
+                                </a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">
+                                    <span class="glyphicon glyphicon-picture" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Mapa"></span>
+                                </a>
+                            </li>
+				          </ul>
+				        </div>
+				        
+				       <div> 
+		                    <div class="pull-left">
+		                        <button type="button" class="btn btn-success " onclick="filtrar()">
+		                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Buscar
+		                        </button>
+		                    </div>
+		                    <div class="pull-right">
+		                        <button type="button" class="btn btn-warning" id="Comparativos">
+		                            <span class="glyphicon glyphicon-sound-dolby" aria-hidden="true"></span>
+		                        </button>
+		                    </div>
+                    	</div>
                 </div>
 
             </div>

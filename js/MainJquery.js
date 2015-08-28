@@ -23,7 +23,8 @@ $(document).ready(function() {
 	        $.ajax({
           		  url: "./services/GetDiagnosticos.php",
           		  data:{
-          		  	clave:request.term.toUpperCase()
+          		  	clave:request.term.toUpperCase(),
+          		  	tabla:$('#TablaGrupo').val()
           		  },
 		          dataType: "jsonp",
 		          jsonpCallback:'getDiagnostico',
@@ -53,6 +54,11 @@ $(document).ready(function() {
 	    },
 	    close: function () {
 	        $(this).removeClass("ui-corner-top").addClass("ui-corner-all");
+	    }
+	}).keypress(function (e) {
+	    if (e.keyCode === 13) {
+	        e.preventDefault();
+	        return false;
 	    }
 	}).autocomplete("instance")._renderItem = function (ul, item) {
 	    ul.addClass("list-group");
@@ -163,9 +169,15 @@ function getparametros(){
   	}else if(CodDiagnostico=="GRUSG1"){
   		campocodDiag='cod_chik';
   		CodDiagnostico=1;
-  	}else if(CodDiagnostico=="A920"){
-  		campocodDiag='cie10';
-  		CodDiagnostico='A920';
+  	}else if(CodDiagnostico!=""){
+  		if($('#TablaGrupo').val()=="1"){
+  			campocodDiag='cie10';
+  			CodDiagnostico=CodDiagnostico;	
+  		}else if($('#TablaGrupo').val()=="2"){
+  			campocodDiag='grupo_codigo_cie10';
+  			CodDiagnostico=CodDiagnostico;
+  		}
+  		
   	}
   	
   	var parametros = {
@@ -183,7 +195,7 @@ function getparametros(){
 	    msTipoAtencion:msTipoAtencion,
 	    msProcedencia:msProcedencia	    
 	};
-	featureOverlay1.removeFeature(highlight2);
+	//featureOverlay1.removeFeature(highlight2);
 	$("#Diagnostico").empty().append(seleccion_diagnostico);
 	return parametros; 
 }
@@ -197,7 +209,7 @@ function filtrar(){
     	enableFiltering: true,
     	selectAllText:'Todos',
     	enableCaseInsensitiveFiltering: true,
-    	buttonWidth: '150px',
+    	buttonWidth: '132px',
         dropRight: true,
         maxHeight: 250,
         filterPlaceholder:'Buscar...',

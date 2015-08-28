@@ -1,24 +1,37 @@
 <?php
 require_once('./conexion.php');
 
+$tabla=$_GET["tabla"];
 $clave=$_GET["clave"];
 
-$query_sql = "
-select array_to_json(array_agg(row(row.*))) AS diagnosticos 
-from (
-SELECT *
-FROM (	
-	select gecodigo,genombre
-	from salud.gediagno_grupo g
-	where EXISTS(SELECT 1  from salud.gesius 
-	WHERE grupo_codigo_cie10 = g.gecodigo)
-	UNION ALL 
-	SELECT 'GRUSG1','CHIKUNGUNYA GRUPOS'
-	UNION ALL 
-	SELECT 'A920','ENFERMEDAD POR VIRUS CHIKUNGUNYA'
-)t  where upper(genombre) like '%$clave%'  
-) row;
-";
+if($tabla==2){
+	$query_sql = "
+	select array_to_json(array_agg(row(row.*))) AS diagnosticos 
+	from (
+	SELECT *
+	FROM (	
+		select gecodigo,genombre
+		from salud.gediagno_grupo g
+		where EXISTS(SELECT 1  from salud.gesius 
+		WHERE grupo_codigo_cie10 = g.gecodigo)		
+	)t  where upper(genombre) like '%$clave%'  
+	) row;
+	";	
+}elseif($tabla==1){
+	$query_sql = "
+	select array_to_json(array_agg(row(row.*))) AS diagnosticos 
+	from (
+	SELECT *
+	FROM (	
+		select gecodigo,genombre
+		from salud.gediagno_cie10 g
+		where EXISTS(SELECT 1  from salud.gesius 
+		WHERE cie10 = g.gecodigo)		
+	)t   where upper(genombre) like '%$clave%'  
+	) row;
+	";	
+}
+
 //equipo_pruebas  'N'
  //echo "$query_sql<br>";
 
