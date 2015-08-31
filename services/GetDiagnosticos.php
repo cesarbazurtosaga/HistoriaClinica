@@ -10,13 +10,14 @@ if($tabla==2){
 	from (
 	SELECT *
 	FROM (	
-		select gecodigo,genombre
+		select gecodigo,gecodigo||' - '||genombre genombre
 		from salud.gediagno_grupo g
 		where EXISTS(SELECT 1  from salud.gesius 
 		WHERE grupo_codigo_cie10 = g.gecodigo)
 		UNION ALL 
 		SELECT 'GRUSG1','CHIKUNGUNYA GRUPOS'	
-	)t  where upper(genombre) like '%$clave%'  
+	)t  where upper(genombre) like '%$clave%'
+	order by gecodigo
 	) row;
 	";	
 }elseif($tabla==1){
@@ -25,11 +26,12 @@ if($tabla==2){
 	from (
 	SELECT *
 	FROM (	
-		select gecodigo,genombre
+		select gecodigo,gecodigo||' - '||genombre genombre
 		from salud.gediagno_cie10 g
 		where EXISTS(SELECT 1  from salud.gesius 
 		WHERE cie10 = g.gecodigo)		
-	)t   where upper(genombre) like '%$clave%'  
+	)t   where upper(genombre) like '%$clave%'
+	order by gecodigo  
 	) row;
 	";	
 }

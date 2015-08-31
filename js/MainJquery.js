@@ -70,6 +70,19 @@ $(document).ready(function() {
 	};
 	
 	
+	$('#BorrarDiag').click(function(){
+		$("#InpClave").val("").focus();
+	});
+	
+	$("#TablaGrupo").change(function(){
+		$("#InpClave").val("").focus();		
+	});
+	
+	$("#MostrarBusquedas").click(function(){
+		$("#panelBusquedas").show( 300, function() {
+				$("#MostrarBusquedas").hide(300);
+		});
+	});	
 
   	$("#MostrarBusquedas").hide(100);
   	$("#OcultarBusqueda").click(function(){
